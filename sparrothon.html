@@ -1,0 +1,121 @@
+<html>
+<head>
+  <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
+  <script src="https://cdn.anychart.com/releases/v8/js/anychart-ui.min.js"></script>
+  <script src="https://cdn.anychart.com/releases/v8/js/anychart-exports.min.js"></script>
+  <script src="https://cdn.anychart.com/releases/v8/js/anychart-linear-gauge.min.js"></script>
+  <script src="https://cdn.anychart.com/releases/v8/js/anychart-table.min.js"></script>
+  <link href="https://cdn.anychart.com/releases/v8/css/anychart-ui.min.css" type="text/css" rel="stylesheet">
+  <link href="https://cdn.anychart.com/releases/v8/fonts/css/anychart-font.min.css" type="text/css" rel="stylesheet">
+  <style type="text/css">
+
+    html,
+    body, 
+    #background {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      max-height: 120px;
+    }
+
+</style>
+</head>
+<body>
+  
+  <div id="container"></div>
+  
+
+  <script>
+
+  anychart.onDocumentReady(function () {
+
+   // create data
+   var data = [450];
+
+   // set the gauge type
+   var gauge = anychart.gauges.linear();
+
+   // set the data for the gauge
+   gauge.data(data);
+
+   // set the layout
+   gauge.layout('horizontal');
+
+   // create a color scale
+   var scaleBarColorScale = anychart.scales.ordinalColor().ranges(
+   [
+       {
+           from: 0,
+           to: 25,
+           color: ['#C6DEF1', '#FAEDBC']
+       },
+       {
+           from: 25,
+           to: 50,
+           color: ['#FAEDBC', '#F7D9C4']
+       },
+       {
+           from: 50,
+           to: 75,
+           color: ['#F7D9C4', '#F2C6DE']
+       },
+       {
+           from: 75,
+           to: 100,
+           color: ['#F2C6DE', '#DBCDF0']
+       }
+   ]
+   );
+
+   // create a Scale Bar
+   var scaleBar = gauge.scaleBar(0);
+
+   // set the height and offset of the Scale Bar (both as percentages of the gauge height)
+   scaleBar.width('80%');
+   scaleBar.offset('0');
+
+   // use the color scale (defined earlier) as the color scale of the Scale Bar
+   scaleBar.colorScale(scaleBarColorScale);
+
+   var bar = gauge.bar(0);
+   bar.color('#FF69B4');
+   bar.width("40%");
+   bar.offset('40');
+   bar.zIndex(10);
+   bar.stroke({"color": "#000000", "thickness": "0px"});
+
+   // configure the scale
+   var scale = gauge.scale();
+   scale.minimum(0);
+   scale.maximum(3500);
+   scale.ticks().interval(500);
+
+   // configure the axis
+   var axis = gauge.axis();
+   axis.stroke('#000000');
+   axis.labels().fontColor('#000000')
+   axis.labels().fontSize('24')
+   axis.minorTicks(false);
+   axis.minorTicks().stroke({"color": "#000000", "thickness": "2px"});
+   axis.width('80%');
+   axis.offset('80%');
+   axis.orientation('bottom');
+
+   // format axis labels
+   axis.labels().format('{%value}');
+
+   // set paddings
+   gauge.padding([0, 50]);
+
+   // set the container id
+   gauge.container('container');
+   gauge.background('#50e1ed');
+   scaleBar.stroke({"color": "#000000", "thickness": "0px"})
+
+   // initiate drawing the gauge
+   gauge.draw();
+});
+</script>
+</body>
+</html>
